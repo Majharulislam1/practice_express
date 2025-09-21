@@ -25,8 +25,11 @@ const create_user = async ( req: Request,res: Response,) => {
     // await crt_user.save();
 
 
-    const password = await User_Model.hash_password(user.password);
-     user.password = password;
+    // static methods
+    // const password = await User_Model.hash_password(user.password);
+    //  user.password = password;
+
+
     const create_user = await User_Model.create(user);
     res.send({
         success: true,

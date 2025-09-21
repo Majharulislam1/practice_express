@@ -43,12 +43,18 @@ const userSchema = new Schema<user_info,user_static>({
 //            const has_pass = await bcrypt.hashSync(password, 10);
 //            return has_pass;
 // }); 
-userSchema.static('hash_password', async function hash_password(password:string) {
-           const has_pass = await bcrypt.hashSync(password, 10);
-           return has_pass;
-}); 
+// userSchema.static('hash_password', async function hash_password(password:string) {
+//            const has_pass = await bcrypt.hashSync(password, 10);
+//            return has_pass;
+// }); 
 
+userSchema.pre('save',async function(){
+     this.password = await bcrypt.hashSync(this.password, 10);
+})
 
+userSchema.post("save",function(doc){
+     console.log(`${doc.email} successfully added`);
+})
 
 const User_Model = model<user_info,user_static>('user',userSchema);
 
